@@ -67,6 +67,8 @@
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
 		D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B0611A1803AB670077942B /* CoreMotion.framework */; };
+		ED2195891CC3309400BE15AD /* GB2ShapeCache-x.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED2195871CC3309400BE15AD /* GB2ShapeCache-x.cpp */; };
+		ED21958E1CC333AC00BE15AD /* Box2dAndPEScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED21958C1CC333AC00BE15AD /* Box2dAndPEScene.cpp */; };
 		ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7B1B68A1F400C3958E /* libiconv.dylib */; };
 		ED545A7E1B68A1FA00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7D1B68A1FA00C3958E /* libiconv.dylib */; };
 		EDD41FD21CC1E1360089FC42 /* Box2dScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDD41FD01CC1E1360089FC42 /* Box2dScene.cpp */; };
@@ -162,6 +164,10 @@
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D6B0611A1803AB670077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		ED2195871CC3309400BE15AD /* GB2ShapeCache-x.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "GB2ShapeCache-x.cpp"; sourceTree = "<group>"; };
+		ED2195881CC3309400BE15AD /* GB2ShapeCache-x.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GB2ShapeCache-x.h"; sourceTree = "<group>"; };
+		ED21958C1CC333AC00BE15AD /* Box2dAndPEScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box2dAndPEScene.cpp; sourceTree = "<group>"; };
+		ED21958D1CC333AC00BE15AD /* Box2dAndPEScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Box2dAndPEScene.hpp; sourceTree = "<group>"; };
 		ED545A7B1B68A1F400C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		ED545A7D1B68A1FA00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		EDD41FD01CC1E1360089FC42 /* Box2dScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box2dScene.cpp; sourceTree = "<group>"; };
@@ -300,12 +306,12 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
+				ED21958A1CC3331500BE15AD /* Bos2dBasic */,
+				ED21958B1CC3332A00BE15AD /* Box2d_PhysicsEditor */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
-				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
+				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
-				EDD41FD11CC1E1360089FC42 /* Box2dScene.hpp */,
-				EDD41FD01CC1E1360089FC42 /* Box2dScene.cpp */,
+				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -357,6 +363,26 @@
 			name = Icons;
 			path = ios;
 			sourceTree = SOURCE_ROOT;
+		};
+		ED21958A1CC3331500BE15AD /* Bos2dBasic */ = {
+			isa = PBXGroup;
+			children = (
+				EDD41FD11CC1E1360089FC42 /* Box2dScene.hpp */,
+				EDD41FD01CC1E1360089FC42 /* Box2dScene.cpp */,
+			);
+			name = Bos2dBasic;
+			sourceTree = "<group>";
+		};
+		ED21958B1CC3332A00BE15AD /* Box2d_PhysicsEditor */ = {
+			isa = PBXGroup;
+			children = (
+				ED2195881CC3309400BE15AD /* GB2ShapeCache-x.h */,
+				ED2195871CC3309400BE15AD /* GB2ShapeCache-x.cpp */,
+				ED21958D1CC333AC00BE15AD /* Box2dAndPEScene.hpp */,
+				ED21958C1CC333AC00BE15AD /* Box2dAndPEScene.cpp */,
+			);
+			name = Box2d_PhysicsEditor;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -500,6 +526,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDD41FD21CC1E1360089FC42 /* Box2dScene.cpp in Sources */,
+				ED21958E1CC333AC00BE15AD /* Box2dAndPEScene.cpp in Sources */,
+				ED2195891CC3309400BE15AD /* GB2ShapeCache-x.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,

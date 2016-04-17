@@ -1,5 +1,6 @@
 #include "HelloWorldScene.h"
 #include "Box2dScene.hpp"
+#include "Box2dAndPEScene.hpp"
 
 USING_NS_CC;
 
@@ -37,6 +38,22 @@ bool HelloWorld::init()
 		   }
 	   });
 	this->addChild(box2dButton);
+	
+	// Box2d+PhysicsEditor
+	ui::Button *box2dPEButton = ui::Button::create();
+	box2dPEButton->setTitleText("Box2D+PhysicsEditor");
+	box2dPEButton->setTitleFontSize(42);
+	box2dPEButton->setPosition(Vec2(winSize.width * 0.5f,winSize.height * 0.6f));
+	box2dPEButton->addTouchEventListener([=](Ref* pSender,ui::Widget::TouchEventType type)
+	   {
+		   if(type == ui::Widget::TouchEventType::ENDED)
+		   {
+			   Scene *scene = Box2dAndPEScene::createScene();
+			   TransitionFade *transition = TransitionFade::create(1.0f, scene, Color3B::WHITE);
+			   Director::getInstance()->replaceScene(transition);
+		   }
+	   });
+	this->addChild(box2dPEButton);
 	
     
     return true;
