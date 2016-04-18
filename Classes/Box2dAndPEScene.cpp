@@ -204,8 +204,45 @@ void Box2dAndPEScene::createBlock(int x,int y)
 	// AnchorPointを取得して設定
 	block->setAnchorPoint(gbox2d::GB2ShapeCache::getInstance()->anchorPointForShape(blockName));
 	
+	// ブロックのサイズ変更
+	// 大きさ 0.75倍、等倍、1.25倍
+	float scale = 0.75f + ((int)(CCRANDOM_0_1() * 100) % 3) * 0.25f;
 	
-	CCLOG("■ブロック%dを作成しました。",_blockNo);
+	if(scale != 1.0f)
+	{
+		// 物理構造のスケーリング
+		for (b2Fixture* f = body->GetFixtureList(); f; f = f->GetNext())
+		{
+			b2Shape *shape = f->GetShape();
+			if(shape->GetType() == b2Shape::e_circle)
+			{
+				// 円の場合は半径をスケール
+				body->GetFixtureList()->GetShape()->m_radius *= scale;
+			}
+			else
+			{
+				// 円以外の場合
+				b2PolygonShape *poly = (b2PolygonShape*)shape;
+				int vCount = poly->GetVertexCount();	// 頂点の数
+				b2Vec2 vertices[b2_maxPolygonVertices];
+				// 全ての頂点にscaleをかける
+				for(int i = 0; i < vCount; i++)
+				{
+					b2Vec2 v = poly->GetVertex(i);
+					vertices[i].x = v.x * scale;
+					vertices[i].y = v.y * scale;
+				}
+				// 新しい頂点を設定
+				poly->Set(vertices, vCount);
+			}
+		}
+		
+		// スプライトもサイズ変更
+		block->setScale(scale);
+	}
+	
+	
+	CCLOG("■ブロック%dを作成しました。サイズ：%f",_blockNo,scale);
 }
 // 地面を作成する
 void Box2dAndPEScene::createGround()
