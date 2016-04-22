@@ -71,6 +71,7 @@
 		ED21958E1CC333AC00BE15AD /* Box2dAndPEScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED21958C1CC333AC00BE15AD /* Box2dAndPEScene.cpp */; };
 		ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7B1B68A1F400C3958E /* libiconv.dylib */; };
 		ED545A7E1B68A1FA00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7D1B68A1FA00C3958E /* libiconv.dylib */; };
+		EDAC06D51CCA00DE001BF3E9 /* GLESDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAC06D31CCA00DD001BF3E9 /* GLESDebugDraw.cpp */; };
 		EDD41FD21CC1E1360089FC42 /* Box2dScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDD41FD01CC1E1360089FC42 /* Box2dScene.cpp */; };
 /* End PBXBuildFile section */
 
@@ -170,6 +171,8 @@
 		ED21958D1CC333AC00BE15AD /* Box2dAndPEScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Box2dAndPEScene.hpp; sourceTree = "<group>"; };
 		ED545A7B1B68A1F400C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		ED545A7D1B68A1FA00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		EDAC06D31CCA00DD001BF3E9 /* GLESDebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLESDebugDraw.cpp; sourceTree = "<group>"; };
+		EDAC06D41CCA00DD001BF3E9 /* GLESDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLESDebugDraw.h; sourceTree = "<group>"; };
 		EDD41FD01CC1E1360089FC42 /* Box2dScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box2dScene.cpp; sourceTree = "<group>"; };
 		EDD41FD11CC1E1360089FC42 /* Box2dScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Box2dScene.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -376,6 +379,8 @@
 		ED21958B1CC3332A00BE15AD /* Box2d_PhysicsEditor */ = {
 			isa = PBXGroup;
 			children = (
+				EDAC06D41CCA00DD001BF3E9 /* GLESDebugDraw.h */,
+				EDAC06D31CCA00DD001BF3E9 /* GLESDebugDraw.cpp */,
 				ED2195881CC3309400BE15AD /* GB2ShapeCache-x.h */,
 				ED2195871CC3309400BE15AD /* GB2ShapeCache-x.cpp */,
 				ED21958D1CC333AC00BE15AD /* Box2dAndPEScene.hpp */,
@@ -532,6 +537,7 @@
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				EDAC06D51CCA00DE001BF3E9 /* GLESDebugDraw.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

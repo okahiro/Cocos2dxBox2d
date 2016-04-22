@@ -14,7 +14,7 @@
 USING_NS_CC;
 
 #pragma mark - Box2dAndPEScene
-Box2dAndPEScene::Box2dAndPEScene() : _world(nullptr)
+Box2dAndPEScene::Box2dAndPEScene() : _world(nullptr),_debugDraw(nullptr)
 {
 	
 }
@@ -27,6 +27,14 @@ Box2dAndPEScene::~Box2dAndPEScene()
 		_world = nullptr;
 		
 		CCLOG("b2World has been safely deleted.");
+	}
+	// GLESDebugDrawを解放
+	if(_debugDraw)
+	{
+		delete _debugDraw;
+		_debugDraw = nullptr;
+		
+		CCLOG("DebugDraw has been safely deleted.");
 	}
 }
 
@@ -61,6 +69,17 @@ bool Box2dAndPEScene::init()
 	_world = new b2World(gravity);
 	_world->SetAllowSleeping(true);
 	_world->SetContinuousPhysics(true);
+	
+	_debugDraw = new GLESDebugDraw(PTM_RATIO);
+	_world->SetDebugDraw(_debugDraw);
+	
+	uint32 flags = 0;
+	flags += b2Draw::e_shapeBit;
+	//        flags += b2Draw::e_jointBit;
+	//        flags += b2Draw::e_aabbBit;
+	flags += b2Draw::e_pairBit;
+	//        flags += b2Draw::e_centerOfMassBit;
+	this->_debugDraw->SetFlags(flags);
 	
 	// PhysicsEditorから出力したplistを読み込み
 	gbox2d::GB2ShapeCache::getInstance()->addShapesWithFile("res/shapes.plist");
@@ -191,7 +210,14 @@ void Box2dAndPEScene::createBlock(int x,int y)
 	// Sprite
 	Sprite *block = Sprite::create(StringUtils::format("res/%s.png",blockName.c_str()));
 	block->setTag(_blockNo);		// ブロックに番号をつける
+	block->setOpacity(80);
 	this->addChild(block);
+	
+	// NoLabel
+	Label *blockNoLabel = Label::createWithSystemFont(StringUtils::format("No%d",_blockNo), "", 36);
+	blockNoLabel->setPosition(block->getContentSize() * 0.5f);
+	blockNoLabel->enableOutline(Color4B::BLACK,2);
+	block->addChild(blockNoLabel);
 	
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
@@ -266,4 +292,16 @@ void Box2dAndPEScene::createGround()
 	b2EdgeShape groundShape;
 	groundShape.Set(b2Vec2(winSize.width * 0.2f / PTM_RATIO,0),b2Vec2(winSize.width * 0.8f / PTM_RATIO,0));
 	groundBody->CreateFixture(&groundShape, 0);
+}
+
+
+// デバッグ情報表示
+void Box2dAndPEScene::draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) {
+	Layer::draw(renderer, transform, flags);
+	Director* director = Director::getInstance();
+	
+	GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
+	director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+	this->_world->DrawDebugData();
+	director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }

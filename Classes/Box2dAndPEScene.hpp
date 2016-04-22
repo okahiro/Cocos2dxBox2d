@@ -12,12 +12,14 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "Box2D/Box2D.h"
+#include "GLESDebugDraw.h"
 
 // シーン
 class Box2dAndPEScene : public cocos2d::Layer
 {
 private:
 	b2World *_world;	// 物理ワールド
+	GLESDebugDraw *_debugDraw;	// 物理体デバッグ表示
 	
 	const float PTM_RATIO = 32.0f;
 	const float TIME_STEP = 1.0f / 60.0f;
@@ -35,6 +37,8 @@ public:
 	CREATE_FUNC(Box2dAndPEScene);
 	
 	void update(float delta) override;
+	
+	virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
 	
 	// ブロックを作成
 	void createBlock(int x,int y);
