@@ -70,6 +70,7 @@ bool Box2dAndPEScene::init()
 	_world->SetAllowSleeping(true);
 	_world->SetContinuousPhysics(true);
 	
+	// DebugDrawを設定
 	_debugDraw = new GLESDebugDraw(PTM_RATIO);
 	_world->SetDebugDraw(_debugDraw);
 	
@@ -121,6 +122,78 @@ bool Box2dAndPEScene::init()
 	   });
 	this->addChild(resetButton);
 	
+	// 接触情報取得ボタン
+	ui::Button *infoButton = ui::Button::create();
+	infoButton->setTitleText("接触情報取得");
+	infoButton->setTitleFontSize(26);
+	infoButton->setPosition(Vec2(winSize.width * 0.85f,winSize.height * 0.75f));
+	infoButton->addTouchEventListener([=](Ref* pSender,ui::Widget::TouchEventType type)
+	  {
+		  if(type == ui::Widget::TouchEventType::ENDED)
+		  {
+			  std::string logString = "■接触情報■\n";
+			  
+			  for (b2Body *b = _world->GetBodyList(); b; b = b->GetNext())
+			  {
+				  if (b->GetUserData() != nullptr && b->GetLinearVelocity().Length() < 2.0f)
+				  {
+					  auto node = (Node *)b->GetUserData();
+					  
+					  // タグ。0は地面、1移行はブロック
+					  int tag = node->getTag();
+					  logString.append(StringUtils::format("物理体No%d\n",tag));
+						  
+					  // 物理体から、現時点のコンタクトのリストを取得する。同じ物理体に二箇所以上で接触している場合、その箇所分
+					  for (b2ContactEdge* ce = b->GetContactList(); ce; ce = ce->next)
+					  {
+						  b2Contact* c = ce->contact;
+						  // 接触していなければ終了
+						  if(!c->IsTouching())
+						  {
+							  continue;
+						  }
+						  
+						  // b2Contactから、２つのオブエジェクトを取得する。
+						  b2Body *bA = c->GetFixtureA()->GetBody();
+						  b2Body *bB = c->GetFixtureB()->GetBody();
+						  Node *nodeA = (Node*)bA->GetUserData();
+						  Node *nodeB = (Node*)bB->GetUserData();
+						  
+						  int contactNodeTag = -1;
+						  
+						  if(nodeA->getTag() == tag)
+						  {
+							  contactNodeTag = nodeB->getTag();
+						  }
+						  else if(nodeB->getTag() == tag)
+						  {
+							  contactNodeTag = nodeA ->getTag();
+						  }
+						  else
+						  {
+							  continue;
+						  }
+						  
+						  logString.append(StringUtils::format("┗接触物理体No%d\n",contactNodeTag));
+					  }
+				  }
+			  }
+			  
+			  // ログに表示
+			  CCLOG("%s",logString.c_str());
+			  
+			  // ラベルがあれば削除
+			  this->removeChildByTag(999);
+			  // ラベルを作って表示
+			  Label *infoLabel = Label::createWithSystemFont(logString, "", 20);
+			  infoLabel->setTag(999);
+			  //infoLabel->setAlignment(TextHAlignment::LEFT, TextVAlignment::TOP);
+			  infoLabel->setAnchorPoint(Vec2(0.0f,1.0f));
+			  infoLabel->setPosition(Vec2(5,winSize.height * 0.85f));
+			  this->addChild(infoLabel);
+		  }
+	  });
+	this->addChild(infoButton);
 	
 	// 画面をタップしたら
 	auto listenerForSprite = EventListenerTouchOneByOne::create();
@@ -278,6 +351,7 @@ void Box2dAndPEScene::createGround()
 	// Node
 	Node *ground = Node::create();
 	ground->setPosition(Vec2::ZERO);
+	ground->setTag(0);
 	this->addChild(ground);
 	
 	// 物理オブジェクトBody
